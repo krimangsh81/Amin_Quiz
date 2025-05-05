@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Result</title>
+</head>
+<body>
+    <h2>{{ quiz.title }} - Your Result</h2>
+<p>Score: {{ result.score }} out of {{ result.total }}</p>
+<a href="{% url 'quiz_list' %}">Back to Quiz List</a>
+
+</body>
+</html>

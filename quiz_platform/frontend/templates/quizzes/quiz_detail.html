@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ quiz.title }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #d1dae4;
+            margin: 0;
+            padding: 20px;
+            color: #180202;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 5px solid #3498db;
+            border-radius: 8px;
+        }
+
+        .question-block p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .answer-option {
+            display: block;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .question-block p {
+                font-size: 16px;
+            }
+
+            .answer-option {
+                font-size: 14px;
+            }
+
+            button[type="submit"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ quiz.title }}</h1>
+    <p>{{ quiz.description }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% for question in questions %}
+            <div>
+                <p>{{ forloop.counter }}: {{ question.text }}</p>
+                {% for option in question.answeroption_set.all %}
+                    <label>
+                        <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
+                        {{ option.text }}
+                    </label><br>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit">Submit Quiz</button>
+    </form>
+    
+
+    <a href="{% url 'quiz_list' %}">Back to Quiz List</a>
+</body>
+</html>
